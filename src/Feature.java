@@ -1,8 +1,13 @@
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +24,8 @@ public class Feature {
         System.out.println("-Features Java 11");
 
 //        java11StringApi();
-        java11HttpApi();
+//        java11HttpApi();
+        java11FilesApi();
     }
 
     private static void java11StringApi() {
@@ -133,5 +139,22 @@ public class Feature {
                         System.out.println("[FAILURE] Could not " + "verify " + uri);
                     }
                 });
+    }
+
+    private static void java11FilesApi() {
+        System.out.println("--Files API");
+
+        try {
+            System.out.println("---Write string");
+            Path tempfilePath = Path.of(File.createTempFile("tempfile", ".tmp").toURI());
+            Path writeString = Files.writeString(tempfilePath, "Lorem Ipsum", Charset.defaultCharset(), StandardOpenOption.WRITE);
+            System.out.println("File path: " + writeString.toString());
+
+            System.out.println("---Read string");
+            String readString = Files.readString(Path.of(writeString.toUri()), Charset.defaultCharset());
+            System.out.println("Read file content: " + readString);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
