@@ -12,6 +12,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
@@ -25,7 +26,8 @@ public class Feature {
 
 //        java11StringApi();
 //        java11HttpApi();
-        java11FilesApi();
+//        java11FilesApi();
+        java11OptionalIsEmptyApi();
     }
 
     private static void java11StringApi() {
@@ -156,5 +158,15 @@ public class Feature {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void java11OptionalIsEmptyApi() {
+        System.out.println("--Optional.isEmpty");
+        String variable = null;
+
+        System.out.println("---Before Java 11");
+        System.out.println(!Optional.ofNullable(variable).isPresent());
+        System.out.println("---After Java 11");
+        System.out.println(Optional.ofNullable(variable).isEmpty());
     }
 }
